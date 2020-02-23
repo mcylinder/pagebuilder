@@ -10,6 +10,18 @@ class BrickController extends ModuleController
 {
     protected $moduleName = 'bricks';
 
+    protected $indexColumns = [
+        'title' => [
+            'title' => 'Title',
+            'field' => 'title',
+        ],
+        'image' => [
+            'title' => 'Brick Image',
+            'field' => 'brick_image',
+        ],
+        ];
+
+
     public function checkRender()
     {
         $bricks = Brick::all();
@@ -17,8 +29,9 @@ class BrickController extends ModuleController
         $bricks_need_image = [];
 
         foreach ($bricks as $brick) {
-            if (Storage::disk('local')->exists($brick->id . '.png')) {
-                $time = \Storage::disk('local')->lastModified($brick->id . '.png') ?? 0;
+            $file_path = 'public/'.$brick->id . '.png';
+            if (Storage::disk('local')->exists($file_path)) {
+                $time = \Storage::disk('local')->lastModified($file_path) ?? 0;
             } else {
                 $time = 0;
             }

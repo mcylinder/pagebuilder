@@ -21,8 +21,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('saveimage', function (Request $request) {
     $id = $request->id;
     $img_strng = substr($request->dataUrl, strpos($request->dataUrl, ",")+1);
-    $file = base64_decode($img_strng );
-    Storage::disk('local')->put($id . '.png', $file);
+    $file = base64_decode($img_strng);
+    $file_path = 'public/'.$id . '.png';
+    Storage::disk('local')->put($file_path, $file);
 
     return response()->json(['id' => $id,'success' => 'success'], 200);
 });
