@@ -15,6 +15,10 @@ class CreateBricksTables extends Migration
             $table->string('title', 200)->nullable();
             $table->text('html')->nullable();
         });
+
+        Schema::table('bricks', function (Blueprint $table) {
+            $table->boolean('published')->default(true)->change();
+        });
     }
 
     public function down()
