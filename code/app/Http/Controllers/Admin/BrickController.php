@@ -13,11 +13,12 @@ class BrickController extends ModuleController
     public function checkRender()
     {
         $bricks = Brick::all();
+
         $bricks_need_image = [];
 
         foreach ($bricks as $brick) {
             if (Storage::disk('local')->exists($brick->id . '.png')) {
-                $time = \Storage::disk('local')->lastModified($brick->id . '.png');
+                $time = \Storage::disk('local')->lastModified($brick->id . '.png') ?? 0;
             } else {
                 $time = 0;
             }
@@ -26,10 +27,6 @@ class BrickController extends ModuleController
                 $bricks_need_image[] = $brick;
             }
         }
-        if (count($bricks_need_image) == 0) {
-            return redirect('admin/bricks_index');
-        } else {
-            return view('admin.bricks.render_list', compact('bricks_need_image'));
-        }
+        return $bricks_need_image;
     }
 }

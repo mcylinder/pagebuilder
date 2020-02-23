@@ -20154,21 +20154,49 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 var htmlToImage = __webpack_require__(/*! html-to-image */ "./node_modules/html-to-image/lib/index.js");
 
-var spans = document.querySelectorAll('span.brick'),
-    i;
+var spans;
+var imgProc = [];
+var imgData = [];
+var axiosCalls = [];
+var howWide = document.getElementById('howWide');
+var callItem = 0;
 
-for (i = 0; i < spans.length; ++i) {
-  var brickNode = spans[i];
-  var brick_id = brickNode.getAttribute('data-brick_id');
-  htmlToImage.toPng(brickNode.firstElementChild).then(function (dataUrl) {
-    console.log(dataUrl);
-    var img = new Image();
-    img.src = dataUrl;
-    document.body.appendChild(img);
-  })["catch"](function (error) {
-    console.error('oops, something went wrong!', error);
-  });
-}
+var onresize = function onresize() {
+  howWide.innerHTML = document.body.clientWidth;
+
+  if (document.body.clientWidth >= 1280 && typeof spans === 'undefined') {
+    spans = document.querySelectorAll('span.brick');
+    spans.forEach(function (brickNode) {
+      var brick_id = brickNode.getAttribute('data-brick_id');
+      imgProc.push(htmlToImage.toPng(brickNode).then(function (dataUrl) {
+        imgData.push({
+          id: brick_id,
+          dataUrl: dataUrl
+        });
+      })["catch"](function (error) {
+        console.error('oops, something went wrong!', error);
+      }));
+    });
+    Promise.all(imgProc).then(function (x) {
+      imgData.forEach(function (row) {
+        axiosCalls.push(axios.post('/api/saveimage', row).then(function (response) {
+          callItem++;
+          console.log(row);
+
+          if (imgData.length === callItem) {
+            window.location.replace("/admin/bricks");
+          }
+        })["catch"](function (error) {
+          console.log(error);
+        }));
+      });
+    });
+    Promise.all(axiosCalls);
+  }
+};
+
+window.addEventListener('resize', onresize);
+onresize();
 
 /***/ }),
 

@@ -1,22 +1,56 @@
 require('./bootstrap');
-var htmlToImage = require('html-to-image');
+const htmlToImage = require('html-to-image');
 
-var spans = document.querySelectorAll('span.brick'),i;
+let spans;
+const imgProc = [];
+const imgData = [];
+const axiosCalls = [];
+const howWide = document.getElementById('howWide');
 
-for (i = 0; i < spans.length; ++i) {
-    var brickNode = spans[i];
-    var brick_id = brickNode.getAttribute('data-brick_id');
-    
+let callItem = 0;
 
-    htmlToImage
-        .toPng(brickNode.firstElementChild)
-        .then(function(dataUrl) {
-            console.log(dataUrl);
-            var img = new Image();
-            img.src = dataUrl;
-            document.body.appendChild(img);
-        })
-        .catch(function(error) {
-            console.error('oops, something went wrong!', error);
+const onresize = function() {
+    howWide.innerHTML = document.body.clientWidth;
+
+    if (document.body.clientWidth >= 1280 && typeof spans === 'undefined') {
+        spans = document.querySelectorAll('span.brick');
+        spans.forEach(brickNode => {
+            const brick_id = brickNode.getAttribute('data-brick_id');
+
+            imgProc.push(
+                htmlToImage
+                    .toPng(brickNode)
+                    .then(function(dataUrl) {
+                        imgData.push({ id: brick_id, dataUrl: dataUrl });
+                    })
+                    .catch(function(error) {
+                        console.error('oops, something went wrong!', error);
+                    }),
+            );
         });
-}
+
+        Promise.all(imgProc).then(x => {
+            imgData.forEach(row => {
+                axiosCalls.push(
+                    axios
+                        .post('/api/saveimage', row)
+                        .then(function(response) {
+                            callItem++;
+                            console.log(row);
+                            if (imgData.length === callItem) {
+                                window.location.replace("/admin/bricks");
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        }),
+                );
+            });
+        });
+
+        Promise.all(axiosCalls);
+    }
+};
+
+window.addEventListener('resize', onresize);
+onresize();
