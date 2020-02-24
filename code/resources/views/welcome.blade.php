@@ -7,18 +7,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Render List</title>
     <link href="/css/tailwind.min.css" rel="stylesheet">
-    <style>
-        span.brick {
-            width: 1200px;
-            display: inline-block;
-            overflow: hidden;
-        }
-    </style>
+<script>
+    var bricks = {!! $jbricks !!};
+</script>
+<style>
+
+</style>
 
 
 </head>
 
-<body class="bg-white">
+<body class="bg-white p-1">
+
+
 
 <div id="app"></div>
 
