@@ -6,5 +6,8 @@
     "/assets/admin/js/main-form.js": "/assets/admin/js/main-form.js?id=22b5e3bbd3904e90dd3e",
     "/assets/admin/js/main-free.js": "/assets/admin/js/main-free.js?id=c0ab99eb3e6b32749874",
     "/assets/admin/js/main-listing.js": "/assets/admin/js/main-listing.js?id=2d8e1433f658b3d3daa4",
-    "/assets/admin/css/app.css": "/assets/admin/css/app.css?id=edb1c44eee53e2cd4f9d"
+    "/assets/admin/css/app.css": "/assets/admin/css/app.css?id=edb1c44eee53e2cd4f9d",
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/js/frontend.js": "/js/frontend.js"
 }

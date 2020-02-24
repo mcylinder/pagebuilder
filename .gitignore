@@ -1,0 +1,15 @@
+/.DS_Store
+/.idea
+/code/.DS_Store
+/code/.vagrant/machines/pagebuilder/virtualbox/action_provision
+/code/.vagrant/machines/pagebuilder/virtualbox/action_set_name
+/code/.vagrant/machines/pagebuilder/virtualbox/id
+/code/.vagrant/machines/pagebuilder/virtualbox/index_uuid
+/code/.vagrant/machines/pagebuilder/virtualbox/private_key
+/code/.vagrant/machines/pagebuilder/virtualbox/synced_folders
+/code/.vagrant/machines/pagebuilder/virtualbox/vagrant_cwd
+/code/composer.lock
+/code/public/.DS_Store
+/code/public/assets/.DS_Store
+/code/public/assets/admin/.DS_Store
+/code/storage/.DS_Store

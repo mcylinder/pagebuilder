@@ -20152,51 +20152,7 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-var htmlToImage = __webpack_require__(/*! html-to-image */ "./node_modules/html-to-image/lib/index.js");
-
-var spans;
-var imgProc = [];
-var imgData = [];
-var axiosCalls = [];
-var howWide = document.getElementById('howWide');
-var callItem = 0;
-
-var onresize = function onresize() {
-  howWide.innerHTML = document.body.clientWidth;
-
-  if (document.body.clientWidth >= 1280 && typeof spans === 'undefined') {
-    spans = document.querySelectorAll('span.brick');
-    spans.forEach(function (brickNode) {
-      var brick_id = brickNode.getAttribute('data-brick_id');
-      imgProc.push(htmlToImage.toPng(brickNode).then(function (dataUrl) {
-        imgData.push({
-          id: brick_id,
-          dataUrl: dataUrl
-        });
-      })["catch"](function (error) {
-        console.error('oops, something went wrong!', error);
-      }));
-    });
-    Promise.all(imgProc).then(function (x) {
-      imgData.forEach(function (row) {
-        axiosCalls.push(axios.post('/api/saveimage', row).then(function (response) {
-          callItem++;
-          console.log(row);
-
-          if (imgData.length === callItem) {
-            window.location.replace("/admin/bricks");
-          }
-        })["catch"](function (error) {
-          console.log(error);
-        }));
-      });
-    });
-    Promise.all(axiosCalls);
-  }
-};
-
-window.addEventListener('resize', onresize);
-onresize();
+__webpack_require__(/*! ./image_html */ "./resources/js/image_html.js");
 
 /***/ }),
 
@@ -20232,6 +20188,71 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/image_html.js":
+/*!************************************!*\
+  !*** ./resources/js/image_html.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var htmlToImage = __webpack_require__(/*! html-to-image */ "./node_modules/html-to-image/lib/index.js"),
+    imgProc = [],
+    imgData = [],
+    axiosCalls = [],
+    howWide = document.getElementById('howWide');
+
+var callItem = 0,
+    spans = null;
+
+var onresize = function onresize() {
+  howWide.innerHTML = document.body.clientWidth;
+
+  if (document.body.clientWidth >= 1280 && spans === null) {
+    convertHtmlImage();
+  }
+};
+
+var convertHtmlImage = function convertHtmlImage() {
+  spans = document.querySelectorAll('span.brick'), spans = document.querySelectorAll('span.brick');
+  imagesHaveLoaded();
+  spans.forEach(function (brickNode) {
+    var brick_id = brickNode.getAttribute('data-brick_id');
+    imgProc.push(htmlToImage.toPng(brickNode).then(function (dataUrl) {
+      imgData.push({
+        id: brick_id,
+        dataUrl: dataUrl
+      });
+    })["catch"](function (error) {
+      console.error('oops, something went wrong!', error);
+    }));
+  });
+  Promise.all(imgProc).then(function (x) {
+    imgData.forEach(function (row) {
+      axiosCalls.push(axios.post('/api/saveimage', row).then(function (response) {
+        callItem++;
+
+        if (imgData.length === callItem) {
+          window.location.replace('/admin/bricks');
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      }));
+    });
+  });
+  Promise.all(axiosCalls);
+};
+
+var imagesHaveLoaded = function imagesHaveLoaded() {
+  return Array.from(document.images).every(function (i) {
+    return i.complete;
+  });
+};
+
+window.addEventListener('resize', onresize);
+onresize();
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -20250,8 +20271,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/peterducharme/Twill_by_example/page_builder/code/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/peterducharme/Twill_by_example/page_builder/code/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/vagrant/code/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/vagrant/code/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

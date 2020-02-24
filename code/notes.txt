@@ -1,0 +1,13 @@
+	phpinfo()
+	/etc/php/7.4/fpm/php.ini
+
+
+max_execution_time = 500
+upload_max_filesize = 128M
+post_max_size = 128M
+
+
+sudo vim /etc/nginx/nginx.conf
+client_max_body_size 2M;
+
+npm i -S vuedraggable
