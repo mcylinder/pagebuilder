@@ -11,4 +11,5 @@
 |
 */
 
-Route::name('ho,epage')->get('/', 'PageController@index');
+Route::name('homepage')->get('/', 'PageController@index');
+Route::name('homepage')->get('preview/{code?}', 'PageController@show');

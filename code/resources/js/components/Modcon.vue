@@ -27,9 +27,9 @@
                     <span>Preview</span>
                 </button></li>
 
-                <li><button v-bind:disabled="!buttonActive" class="w-full text-center mt-6 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+               <!-- <li><button v-bind:disabled="!buttonActive" class="w-full text-center mt-6 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
                     <span>Download</span>
-                </button></li>
+                </button></li>-->
 
                 <li><button @click="clearlist()" v-bind:disabled="!buttonActive" class="w-full text-center mt-6 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
                     <span>Clear</span>
@@ -43,7 +43,6 @@
                     <input v-model="designCode" class="mt-6  shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="code">
                 </li>
 
-=={{buttonActive}}==
             </ul>
 
             </div>

@@ -1992,7 +1992,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "clone",
@@ -24184,18 +24183,6 @@ var render = function() {
             {
               staticClass:
                 "w-full text-center mt-6 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center",
-              attrs: { disabled: !_vm.buttonActive }
-            },
-            [_c("span", [_vm._v("Download")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c(
-            "button",
-            {
-              staticClass:
-                "w-full text-center mt-6 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center",
               attrs: { disabled: !_vm.buttonActive },
               on: {
                 click: function($event) {
@@ -24247,8 +24234,7 @@ var render = function() {
               }
             }
           })
-        ]),
-        _vm._v("\n\n==" + _vm._s(_vm.buttonActive) + "==\n            ")
+        ])
       ])
     ])
   ])
