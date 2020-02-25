@@ -1,0 +1,26 @@
+ip: 192.168.10.30
+memory: 2048
+cpus: 1
+provider: virtualbox
+authorize: ~/.ssh/id_rsa.pub
+keys:
+    - ~/.ssh/id_rsa
+folders:
+    -
+        map: /Users/peterducharme/Desktop/page_builder/code
+        to: /home/vagrant/code
+sites:
+    -
+        map: pagebuilder.test
+        to: /home/vagrant/code/public
+databases:
+    - homestead
+features:
+    -
+        mariadb: false
+    -
+        ohmyzsh: false
+    -
+        webdriver: false
+name: pagebuilder
+hostname: pagebuilder
